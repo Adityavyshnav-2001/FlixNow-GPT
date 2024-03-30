@@ -1,22 +1,35 @@
 import React from "react";
-import Header from "./Header";
-import Banner from "../utils/Banner.png";
-import { useState } from "react";
-
+import Header from "./Header.jsx";
+import Banner from "../utils/images/Banner.png";
+import { useState,useRef} from "react";
+import checkValidData from "../utils/validate.jsx";
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage,setErrorMessage]=useState(null);
+
+
+  const email = useRef(null);
+  const password = useRef(null);
+  const handleButtonClick = () => {
+    console.log(email.current.value);
+    console.log(password.current.value);
+    const message=checkValidData(email.current.value, password.current.value);
+    setErrorMessage(message);
+  };
   const toggleSignIn = () => {
     setIsSignInForm(!isSignInForm);
   };
+
   return (
     <div>
       <Header />
       <div className="absolute">
         <img className="mix-blend-overlay" src={Banner} alt="Logo" />
       </div>
-      <form className="absolute w-3/12 p-8 bg-black my-52 mx-auto right-0 left-0 text-white rounded-xl bg-opacity-70">
+      <form onSubmit={(e)=>e.preventDefault()}
+      className="absolute w-3/12 p-8 bg-black my-52 mx-auto right-0 left-0 text-white rounded-xl bg-opacity-70">
         <h1 className="font-bold text-3xl py-4">
-          {isSignInForm ? "Sign In" : "Sign Up"}
+          {isSignInForm ? "Aditya" : "Sign Up"}
         </h1>
         {!isSignInForm && (
           <input
@@ -26,17 +39,25 @@ const Login = () => {
           />
         )}
         <input
+          ref={email}
           type="text"
           placeholder="Email Address"
           className="p-4 my-4 w-full bg-gray-700 rounded-lg"
         />
         <input
+          ref={password}
           type="password"
           placeholder="Password"
           className="p-4 my-4 w-full bg-gray-700 rounded-lg"
         />
-        <button className="p-4 my-6 w-full rounded-xl bg-gradient-to-r from-yellow-300 to-red-700 hover:bg-gradient-to-b focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-xl font-bold text-black px-5 py-2.5 text-center me-2 mb-2">
+        <p className="text-red-600 font-bold text-lg py-2 ">{errorMessage}</p>
+        <button
+          className="p-4 my-6 w-full rounded-xl bg-gradient-to-r from-yellow-300 to-red-700 hover:bg-gradient-to-b focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 text-black px-5 py-2.5 text-center me-2 mb-2"
+          onClick={handleButtonClick}
+        >
+          <h1 className="font-bold">
           {isSignInForm ? "Sign In" : "Sign Up"}
+          </h1>
         </button>
         <p
           className="py-4 cursor-pointer font-style : italic"

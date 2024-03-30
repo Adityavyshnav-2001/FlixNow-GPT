@@ -1,5 +1,5 @@
 import React from "react";
-import Banner from "../utils/Banner.png";
+import Banner from "../utils/images/Banner.png";
 
 const Browse = () => {
   return (
