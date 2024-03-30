@@ -3,8 +3,8 @@ import myimage from "../utils/Logo.png";
 
 const Header = () => {
   return (
-    <div>
-      <img className="w-28" src={myimage} />
+    <div className="absolute bg-gradient-to-r from-gray-900">
+      <img className="mx-4 w-[400px]" src={myimage} />
     </div>
   );
 };
