@@ -1,0 +1,25 @@
+[debug] [2024-03-30T20:21:23.617Z] ----------------------------------------------------------------------
+[debug] [2024-03-30T20:21:23.619Z] Command:       /usr/local/bin/node /usr/local/bin/firebase init
+[debug] [2024-03-30T20:21:23.619Z] CLI Version:   13.6.0
+[debug] [2024-03-30T20:21:23.619Z] Platform:      darwin
+[debug] [2024-03-30T20:21:23.619Z] Node Version:  v18.17.1
+[debug] [2024-03-30T20:21:23.620Z] Time:          Sun Mar 31 2024 01:51:23 GMT+0530 (India Standard Time)
+[debug] [2024-03-30T20:21:23.620Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-30T20:21:23.670Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-30T20:21:23.671Z] > authorizing via signed-in user (codeadityavyshnav@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/adityavyshnav/Desktop/flixnow-gpt
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+

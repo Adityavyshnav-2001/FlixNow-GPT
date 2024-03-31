@@ -3,6 +3,11 @@ import Header from "./Header.jsx";
 import Banner from "../utils/images/Banner.png";
 import { useState,useRef} from "react";
 import checkValidData from "../utils/validate.jsx";
+import {createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
+
+
+
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage,setErrorMessage]=useState(null);
@@ -11,10 +16,30 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const handleButtonClick = () => {
-    console.log(email.current.value);
-    console.log(password.current.value);
     const message=checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
+
+    if(message) return;
+
+    if(!isSignInForm){
+      createUserWithEmailAndPassword(
+        auth,
+       email.current.value, 
+       password.current.value)
+  .then((userCredential) => {
+    const user = userCredential.user;
+    console.log(user); 
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage(errorCode+"-"+errorMessage); 
+  });
+
+    }else{
+
+    }
+
   };
   const toggleSignIn = () => {
     setIsSignInForm(!isSignInForm);
@@ -29,7 +54,7 @@ const Login = () => {
       <form onSubmit={(e)=>e.preventDefault()}
       className="absolute w-3/12 p-8 bg-black my-52 mx-auto right-0 left-0 text-white rounded-xl bg-opacity-70">
         <h1 className="font-bold text-3xl py-4">
-          {isSignInForm ? "Aditya" : "Sign Up"}
+          {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignInForm && (
           <input
