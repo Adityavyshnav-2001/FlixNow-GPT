@@ -3,14 +3,20 @@ import Header from "./Header.jsx";
 import Banner from "../utils/images/Banner.png";
 import { useState,useRef} from "react";
 import checkValidData from "../utils/validate.jsx";
-import {createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import {createUserWithEmailAndPassword , signInWithEmailAndPassword} from "firebase/auth";
+import auth from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { updateProfile } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice.js";
 
 
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage,setErrorMessage]=useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
   const email = useRef(null);
@@ -23,12 +29,28 @@ const Login = () => {
 
     if(!isSignInForm){
       createUserWithEmailAndPassword(
-        auth,
-       email.current.value, 
-       password.current.value)
+        auth,email.current.value, password.current.value)
   .then((userCredential) => {
     const user = userCredential.user;
-    console.log(user); 
+    updateProfile(user, {
+    displayName: "name.current.value", photoURL: "https://avatars.githubusercontent.com/u/148896965?v=4"
+    }).then(() => {
+      const {uid,email,displayName,photoURL} = auth.currentUser;
+    dispatch
+    (addUser(
+      {uid:uid,
+      email:email,
+      displayName:displayName,
+      photoURL:photoURL}));
+
+      navigate("/browse");  
+      // Profile updated!
+      // ...
+    }).catch((error) => {
+      setErrorMessage(errorMessage);
+  // An error occurred
+  // ...
+});
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -37,6 +59,21 @@ const Login = () => {
   });
 
     }else{
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    navigate("/browse");
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message; 
+    if(errorCode === "auth/invalid-credential") {
+      setErrorMessage("Invalid Email or Password");
+    }
+  });
+
 
     }
 
@@ -49,7 +86,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img className="mix-blend-overlay" src={Banner} alt="Logo" />
+        <img className="relative w-full mix-blend-overlay" src={Banner} alt="Logo" />
       </div>
       <form onSubmit={(e)=>e.preventDefault()}
       className="absolute w-3/12 p-8 bg-black my-52 mx-auto right-0 left-0 text-white rounded-xl bg-opacity-70">
@@ -90,7 +127,7 @@ const Login = () => {
         >
           {" "}
           {isSignInForm
-            ? "New to Netflix ? Sign Up Now"
+            ? "New to FlixNow ? Sign Up Now"
             : "Already Registered? Sign In Now"}
         </p>
       </form>

@@ -1,10 +1,10 @@
 import React from "react";
-import Banner from "../utils/images/Banner.png";
+import Header from "./Header";
 
 const Browse = () => {
   return (
     <div>
-      <img src={Banner} alt="Logo" />
+      <Header />
     </div>
   );
 };
