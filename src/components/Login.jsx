@@ -32,6 +32,8 @@ const Login = () => {
 
     if (message) return;
 
+    
+
     if (!isSignInForm) {
       createUserWithEmailAndPassword(
         auth,

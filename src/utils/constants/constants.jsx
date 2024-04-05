@@ -12,3 +12,4 @@ export const API_OPTIONS = {
 //   .then(response => response.json())
 //   .then(response => console.log(response))
 //   .catch(err => console.error(err));
+export const API_KEY="AIzaSyDHNAXsjXpX7qD5UCjcaQ8NEtqx6xc4wKU";
